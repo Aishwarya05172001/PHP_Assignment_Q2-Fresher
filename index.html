@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Details</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+    }
+
+    .container h2 {
+      text-align: center;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+    }
+
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    .form-group input[type="email"],
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+
+    .form-group .error-msg {
+      color: red;
+      margin-top: 5px;
+    }
+
+    .form-group .success-msg {
+      color: green;
+      margin-top: 5px;
+    }
+
+    .form-group button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .report {
+      margin-top: 30px;
+    }
+
+    .report h2 {
+      text-align: center;
+    }
+
+    .report-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .report-table th,
+    .report-table td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .grade {
+      font-weight: bold;
+    }
+  </style>
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Student Details</h2>
+    <form id="entry-form" action="process_form.php" method="POST" onsubmit="return validateForm()">
+      <div class="form-group">
+        <label for="student-id">Student ID*</label>
+        <input type="number" id="student-id" name="studentId" min="1" placeholder="Enter Student ID"  required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="first-name">First Name*</label>
+        <input type="text" id="first-name" name="firstName" pattern="[A-Za-z]+" placeholder="Enter Student First Name" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="last-name">Last Name*</label>
+        <input type="text" id="last-name" name="lastName" pattern="[A-Za-z]+" placeholder="Enter Student Last Name" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="batch">Batch/Class*</label>
+        <input type="text" id="batch" name="batch" placeholder="Enter Student Batch/Class" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address*</label>
+        <input type="email" id="email" name="email" placeholder="Enter Student Email Address" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="english">English Score*</label>
+        <input type="number" id="english" name="english" min="0" max="100" step="0.01" placeholder="Enter English Score" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="hindi">Hindi Score*</label>
+        <input type="number" id="hindi" name="hindi" min="0" max="100" step="0.01" placeholder="Enter Hindi Score" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="math">Math Score*</label>
+        <input type="number" id="math" name="math" min="0" max="100" step="0.01" placeholder="Enter Math Score" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="science">Science Score*</label>
+        <input type="number" id="science" name="science" min="0" max="100" placeholder="Enter Science Score" step="0.01" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="history">History Score*</label>
+        <input type="number" id="history" name="history" min="0" max="100" step="0.01" placeholder="Enter History Score" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="geography">Geography Score*</label>
+        <input type="number" id="geography" name="geography" min="0" max="100" step="0.01" placeholder="Enter Geography Score" required>
+        <!-- Error message element -->
+      </div>
+      <div class="form-group">
+        <label for="remarks">Remarks</label>
+        <textarea id="remarks" name="remarks" placeholder="Enter Remarks" maxlength="150"></textarea>
+      </div>
+      <div class="form-group">
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    function validateForm() {
+      // Clear previous error messages
+      clearErrorMessages();
+
+      // Validate the form
+      let isValid = true;
+
+      // Validate Student ID
+      const studentId = document.getElementById('student-id').value;
+      if (!studentId.match(/^\d+$/)) {
+        displayErrorMessage('student-id', 'Student ID must be numeric');
+        isValid = false;
+      }
+
+      // Validate First Name
+      const firstName = document.getElementById('first-name').value;
+      if (!firstName.match(/^[A-Za-z]+$/)) {
+        displayErrorMessage('first-name', 'First Name must contain alphabets only');
+        isValid = false;
+      }
+
+      // Validate Last Name
+      const lastName = document.getElementById('last-name').value;
+      if (!lastName.match(/^[A-Za-z]+$/)) {
+        displayErrorMessage('last-name', 'Last Name must contain alphabets only');
+        isValid = false;
+      }
+
+      // Validate Batch/Class
+      const batch = document.getElementById('batch').value;
+      if (!batch.match(/^[\w\s]+$/)) {
+        displayErrorMessage('batch', 'Batch/Class must be alphanumeric');
+        isValid = false;
+      }
+
+      // Validate Email Address
+      const email = document.getElementById('email').value;
+      if (!email.match(/^\S+@\S+\.\S+$/)) {
+        displayErrorMessage('email', 'Invalid Email Address');
+        isValid = false;
+      }
+
+      // Validate Scores
+      const scores = ['english', 'hindi', 'math', 'science', 'history', 'geography'];
+      scores.forEach(score => {
+        const scoreInput = document.getElementById(score);
+        if (isNaN(scoreInput.value) || parseFloat(scoreInput.value) < 0 || parseFloat(scoreInput.value) > 100) {
+          displayErrorMessage(score, 'Score must be a number between 0 and 100');
+          isValid = false;
+        }
+      });
+
+      return isValid;
+    }
+
+    function displayErrorMessage(fieldId, message) {
+      const errorElement = document.createElement('div');
+      errorElement.className = 'error-msg';
+      errorElement.textContent = message;
+
+      const field = document.getElementById(fieldId);
+      field.parentNode.appendChild(errorElement);
+    }
+
+    function clearErrorMessages() {
+      const errorElements = document.querySelectorAll('.error-msg');
+      errorElements.forEach(element => {
+        element.parentNode.removeChild(element);
+      });
+    }
+  </script>
+</body>
+</html>
